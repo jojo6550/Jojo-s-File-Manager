@@ -1,22 +1,41 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <vector>
+#include <cctype>
+#include <string>
+
 
 namespace fs = std::filesystem;
 
+
 class directoryTools{
-private:
+protected:
     //define root directory
     fs::path root = "root";
     fs::path currentDirectory = root;
 
 public:
+
+    directoryTools(){
+
+    }
     directoryTools(fs::path root){
         this->root = root;
         //creates root if it doesn't exists
         if(!fs::exists(root)){
             fs::create_directory(root);
         }
+    }
+
+    bool containsWhitespace(std::string text){
+        for(char c : text){
+            if(isspace){
+                std::cerr<< text << " contains whitespace... Please use _ as space." << std::endl;
+                return true;
+            }
+        }
+        return false;
     }
     //returns current directory inside root
     fs::path getCurrentDirectory(){
@@ -31,6 +50,9 @@ public:
 
     //Changes directory one level down
     void changeDirectory(fs::path subDirectoryPath){
+        if(containsWhitespace(subDirectoryPath.string())){
+            return;
+        }
         fs::path newDirectory = currentDirectory / subDirectoryPath;
 
         if(fs::exists(newDirectory)){
@@ -42,6 +64,9 @@ public:
 
     //creates directory
     void createSubdirectory(fs::path subDirectoryPath){
+        if(containsWhitespace(subDirectoryPath.string())){
+            return;
+        }
         if(fs::exists(getCurrentDirectory() / subDirectoryPath) || fs::is_directory(getCurrentDirectory() / subDirectoryPath)){
             std::cout << subDirectoryPath << " already exists!" << std::endl;
         } else {
@@ -50,6 +75,12 @@ public:
     }
     //renames directory
     void renameSubdirectory(fs::path oldDirectoryName, fs::path newDirectoryName){
+        if(containsWhitespace(oldDirectoryName.string())){
+            return;
+        }
+        if(containsWhitespace(newDirectoryName.string())){
+            return;
+        }
         if(!fs::exists(getCurrentDirectory()/ oldDirectoryName) || !fs::is_directory(getCurrentDirectory() / oldDirectoryName)){
             std::cout << "Directory does not exist..." << std::endl;
         } else {
@@ -58,6 +89,9 @@ public:
     }
     //deletes directory
     void deleteSubdirectory(fs::path subDirectoryPath){
+        if(containsWhitespace(subDirectoryPath.string())){
+            return;
+        }
         if(!fs::exists(getCurrentDirectory() / subDirectoryPath) || !fs::is_directory(getCurrentDirectory() / subDirectoryPath)){
             std::cout << "Directory does not exist..." << std::endl;
         } 
@@ -84,7 +118,7 @@ public:
         }
 
     }
-
+    //Count all subdirectories
     void countSubdirectories(){
         fs::path workingDir = getCurrentDirectory();
         int count = 0;
@@ -161,3 +195,36 @@ public:
 };
 
 
+class fileTools : protected directoryTools{
+public:
+    fs::path workingDir;
+    std::vector<std::string> fileTypes = {"txt", "dat"};
+
+    fileTools(directoryTools dt){
+        workingDir = dt.getCurrentDirectory();
+        std::cout << workingDir << std::endl;
+    }
+    
+
+    void createFile(std::string fileName,std::string fileExtension){
+        bool accepted = false;
+        if(containsWhitespace(fileName)){
+            return;
+        }
+        
+        for(std::string s : fileTypes){
+            if(s == fileExtension){
+                accepted = true;
+            }
+        }
+
+        if(!accepted){
+            std::cout << "Invalid file extension: " << fileExtension << std::endl;
+            return;
+        }
+
+        std::ofstream file(fileName + "." + fileExtension, std::ios::in);
+        std::string openFile = "notepad " + fileName;
+        system(openFile);
+    }
+};

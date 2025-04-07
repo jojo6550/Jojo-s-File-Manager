@@ -5,6 +5,7 @@
 
 int main(){
     directoryTools dt("root");
-    dt.directoryMenu();
+    fileTools ft(dt);
+    //dt.directoryMenu();
     
 }
