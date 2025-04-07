@@ -30,7 +30,7 @@ public:
 
     bool containsWhitespace(std::string text){
         for(char c : text){
-            if(isspace){
+            if(isspace(c)){
                 std::cerr<< text << " contains whitespace... Please use _ as space." << std::endl;
                 return true;
             }
@@ -40,6 +40,10 @@ public:
     //returns current directory inside root
     fs::path getCurrentDirectory(){
         return currentDirectory;
+    }
+
+    fs::path getCurrentDirectory(fs::path filePath){
+        return currentDirectory / filePath;
     }
 
 
@@ -207,24 +211,48 @@ public:
     
 
     void createFile(std::string fileName,std::string fileExtension){
+        std::string file = fileName + "." + fileExtension;
         bool accepted = false;
         if(containsWhitespace(fileName)){
             return;
         }
         
+
         for(std::string s : fileTypes){
             if(s == fileExtension){
                 accepted = true;
             }
         }
+        
+        
 
         if(!accepted){
             std::cout << "Invalid file extension: " << fileExtension << std::endl;
             return;
         }
 
-        std::ofstream file(fileName + "." + fileExtension, std::ios::in);
-        std::string openFile = "notepad " + fileName;
-        system(openFile);
+        std::cout << getCurrentDirectory(file)  << std::endl;
+
+        if(fs::exists(getCurrentDirectory() / file) || fs::is_directory(getCurrentDirectory() / file)){
+            std::cout << file <<" already exist..." << std::endl;
+            return;
+        }
+
+        std::ofstream workingFile(getCurrentDirectory() / file, std::ios::out);
+        if(workingFile.is_open()){
+            workingFile << "Hello world" << std::endl;
+            workingFile.close();  
+        }
+
+        if(fileExtension == "txt"){
+            std::string commandString = "notepad.exe \"" + fileName + "\"";
+            std::cout << commandString << std::endl;
+            system(commandString.c_str());
+        } else {
+            std::cout << file << " has been created." << std::endl;
+        }
+
+
+        
     }
 };
