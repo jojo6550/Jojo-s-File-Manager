@@ -85,6 +85,15 @@ public:
 
     }
 
+    void countSubdirectories(){
+        fs::path workingDir = getCurrentDirectory();
+        int count = 0;
+        for(const auto var : fs::directory_iterator(workingDir)){
+            count++;
+        }
+        std::cout << "# of subdirectories found: " << count << std::endl;
+    }
+
 
     void directoryMenu(){
         int option;
@@ -92,9 +101,10 @@ public:
     
         while (true) {
             std::cout << "\n==============================\n";
-            std::cout << "Directory Manager Menu\n";
+            std::cout << "  Directory Manager Menu\n";
             std::cout << "==============================\n";
             std::cout << "Current Directory: " << getCurrentDirectory() << "\n";
+            countSubdirectories();
             std::cout << "1. Create Subdirectory\n";
             std::cout << "2. Rename Subdirectory\n";
             std::cout << "3. Delete Subdirectory\n";
