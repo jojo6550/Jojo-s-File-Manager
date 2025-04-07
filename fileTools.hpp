@@ -17,6 +17,7 @@ public:
     }
 
     void createFile(std::string fileName, std::string fileExtension);
+    void readFile(std::string fileName, std::string fileExtension);
     void fileMenu();
 };
 

@@ -42,6 +42,10 @@ void fileTools::createFile(std::string fileName, std::string fileExtension) {
     }
 }
 
+void fileTools::readFile(std::string fileName, std::string fileExtension){
+
+}
+
 void fileTools::fileMenu() {
     int option;
     std::string name, ext;

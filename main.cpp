@@ -2,11 +2,12 @@
 #include <fstream>
 #include <filesystem>
 #include "directoryTools.hpp"
+#include "fileTools.hpp"
 
 int main(){
     directoryTools dt("root");
-    //fileTools ft(dt);
+    fileTools ft();
     //ft.createFile("test2", "txt");
-    dt.directoryMenu();
+    //dt.directoryMenu();
     
 }
