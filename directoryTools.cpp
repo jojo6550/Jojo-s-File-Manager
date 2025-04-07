@@ -23,10 +23,13 @@ public:
         return currentDirectory;
     }
 
+
+    //Returns current directory to parent folder
     void returnToRoot(){
         currentDirectory = root;
     }
 
+    //Changes directory one level down
     void changeDirectory(fs::path subDirectoryPath){
         fs::path newDirectory = currentDirectory / subDirectoryPath;
 
@@ -72,7 +75,7 @@ public:
         }
     }
     
-
+    //lists subdirectories
     void listSubdirectories(){
         fs::path workingDir = getCurrentDirectory();
         std::cout << "Current directory: " << workingDir << std::endl;
@@ -82,6 +85,67 @@ public:
 
     }
 
+
+    void directoryMenu(){
+        int option;
+        std::string input1, input2;
+    
+        while (true) {
+            std::cout << "\n==============================\n";
+            std::cout << "Directory Manager Menu\n";
+            std::cout << "==============================\n";
+            std::cout << "Current Directory: " << getCurrentDirectory() << "\n";
+            std::cout << "1. Create Subdirectory\n";
+            std::cout << "2. Rename Subdirectory\n";
+            std::cout << "3. Delete Subdirectory\n";
+            std::cout << "4. Change Directory\n";
+            std::cout << "5. Return to Root\n";
+            std::cout << "6. List Subdirectories\n";
+            std::cout << "0. Exit\n";
+            std::cout << "==============================\n";
+            std::cout << "Enter option: ";
+            std::cin >> option;
+    
+            std::cin.ignore(); // clear input buffer
+    
+            switch(option){
+                case 1:
+                    std::cout << "Enter name of subdirectory to create: ";
+                    std::getline(std::cin, input1);
+                    createSubdirectory(input1);
+                    break;
+                case 2:
+                    std::cout << "Enter current name of subdirectory: ";
+                    std::getline(std::cin, input1);
+                    std::cout << "Enter new name: ";
+                    std::getline(std::cin, input2);
+                    renameSubdirectory(input1, input2);
+                    break;
+                case 3:
+                    std::cout << "Enter name of subdirectory to delete: ";
+                    std::getline(std::cin, input1);
+                    deleteSubdirectory(input1);
+                    break;
+                case 4:
+                    std::cout << "Enter subdirectory to navigate into: ";
+                    std::getline(std::cin, input1);
+                    changeDirectory(input1);
+                    break;
+                case 5:
+                    returnToRoot();
+                    std::cout << "Returned to root directory.\n";
+                    break;
+                case 6:
+                    listSubdirectories();
+                    break;
+                case 0:
+                    std::cout << "Exiting directory manager...\n";
+                    return;
+                default:
+                    std::cout << "Invalid option. Please try again.\n";
+            }
+        }       
+    }
     
 
 };
