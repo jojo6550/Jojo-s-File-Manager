@@ -15,7 +15,7 @@ A simple C++ program that allows users to manage directories and files using the
 - **Navigate** into subdirectories
 - **Return** to root
 
-### ⏳ 3. File Operations (Coming Soon)
+### ✔️ 3. File Operations 
 - **Create**, **Read**, **Update**, and **Delete** (CRUD) files within the current directory.
 
 ### ⏳ 4. Directory Statistics (Coming Soon)
@@ -34,4 +34,4 @@ A simple C++ program that allows users to manage directories and files using the
 
 ### Compile
 ```bash
-g++ -std=c++17 main.cpp -o directoryManager
+ g++ *.cpp -o directoryManager
