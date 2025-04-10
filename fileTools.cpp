@@ -42,30 +42,33 @@ void fileTools::createFile(std::string fileName, std::string fileExtension) {
     }
 }
 
-void fileTools::readFile(std::string fileName, std::string fileExtension){
-    std::string file = fileName + "." + fileExtension;
+void fileTools::readFile(std::string fileName ){
     bool accepted = false;
 
     if (containsWhitespace(fileName)) {
         return;
     }
 
-    std::vector<std::string> fileTypes = {"txt", "dat"};
-    for (const std::string& s : fileTypes) {
-        if (s == fileExtension) {
-            accepted = true;
-        }
+
+    if(!fs::exists(getCurrentDirectory() / fileName)){
+        std::cout << fileName << "does not exist." << std::endl;
     }
 
-    if (!accepted) {
-        std::cout << "Invalid file extension: " << fileExtension << std::endl;
-        return;
+    std::ifstream workingFile(getCurrentDirectory() / fileName);
+
+    std::string contents;
+
+    while(getline(workingFile, contents)){
+        std::cout << contents << std::endl;
     }
 
-    if(!fs::exists(getCurrentDirectory() / file)){
-        std::cout << file << "does not exists" << std::endl;
-    }
+    workingFile.close();
 }
+
+void fileTools::deleteFile(std::string fileName){
+    
+}
+
 
 void fileTools::fileMenu() {
     int option;
@@ -75,6 +78,7 @@ void fileTools::fileMenu() {
         std::cout << "\n=========== File Menu ===========\n";
         std::cout << "Current Directory: " << getCurrentDirectory() << "\n";
         std::cout << "1. Create File\n";
+        std::cout << "2. Read file\n";
         std::cout << "0. Return to Directory Menu\n";
         std::cout << "Enter option: ";
         std::cin >> option;
@@ -88,6 +92,11 @@ void fileTools::fileMenu() {
                 std::getline(std::cin, ext);
                 createFile(name, ext);
                 break;
+            case 2:
+            std::cout << "Enter file name (with extension, txt only): ";
+            std::getline(std::cin, name);
+            readFile(name);
+            break;
             case 0:
                 return;
             default:

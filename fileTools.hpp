@@ -17,7 +17,9 @@ public:
     }
 
     void createFile(std::string fileName, std::string fileExtension);
-    void readFile(std::string fileName, std::string fileExtension);
+    void readFile(std::string fileName);
+    void editFile(std::string fileName);
+    void deleteFile(std::string fileName);
     void fileMenu();
 };
 
