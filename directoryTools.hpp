@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include <ctime>
 
 namespace fs = std::filesystem;
 
@@ -12,6 +13,7 @@ class directoryTools {
 protected:
     fs::path root;
     fs::path currentDirectory;
+    std::string logType;
 
 public:
     directoryTools();

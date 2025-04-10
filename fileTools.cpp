@@ -43,7 +43,28 @@ void fileTools::createFile(std::string fileName, std::string fileExtension) {
 }
 
 void fileTools::readFile(std::string fileName, std::string fileExtension){
+    std::string file = fileName + "." + fileExtension;
+    bool accepted = false;
 
+    if (containsWhitespace(fileName)) {
+        return;
+    }
+
+    std::vector<std::string> fileTypes = {"txt", "dat"};
+    for (const std::string& s : fileTypes) {
+        if (s == fileExtension) {
+            accepted = true;
+        }
+    }
+
+    if (!accepted) {
+        std::cout << "Invalid file extension: " << fileExtension << std::endl;
+        return;
+    }
+
+    if(!fs::exists(getCurrentDirectory() / file)){
+        std::cout << file << "does not exists" << std::endl;
+    }
 }
 
 void fileTools::fileMenu() {
