@@ -2,3 +2,16 @@
 2. Create, edit, delete and move into subdirectories. ✔
 3. CRUD files.
 4. Provide details of a directory (# of all files, # of files per type etc.)
+
+
+
+
+
+
+
+
+known issues, validation for edit file. need to filter dat and txt files.
+
+confirm deletion order when deleting directory
+
+add logs to filetools
